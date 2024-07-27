@@ -1,11 +1,8 @@
 import time
 import pytest
-from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC, expected_conditions
+from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
-
-from test.test_Registration import generate_email_with_timestamp
 
 
 @pytest.mark.usefixtures("setup_and_teardown", "log_on_failure")
@@ -30,10 +27,12 @@ class TestManagement:
         # Verify start button
         start_button = wait.until(expected_conditions.element_to_be_clickable((By.ID, "ib_list_start_service")))
         self.driver.execute_script("arguments[0].click();", start_button)
-        start_button_message = wait.until(expected_conditions.visibility_of_element_located((By.XPATH, "//div[@class='alert-message sc-ion-alert-md']")))
+        start_button_message = wait.until(expected_conditions.visibility_of_element_located(
+            (By.XPATH, "//div[@class='alert-message sc-ion-alert-md']")))
         assert start_button_message.is_displayed(), "Start button message is not displayed after starting the service"
         # self.driver.find_element(By.XPATH, "//span[@class='alert-button-inner sc-ion-alert-md']").click()
-        wait.until(expected_conditions.element_to_be_clickable(self.driver.find_element(By.XPATH, "//span[@class='alert-button-inner sc-ion-alert-md']"))).click()
+        wait.until(expected_conditions.element_to_be_clickable(
+            self.driver.find_element(By.XPATH, "//span[@class='alert-button-inner sc-ion-alert-md']"))).click()
 
         # Verify stop button
         stop_button = wait.until(expected_conditions.element_to_be_clickable((By.ID, "ib_list_stop_service")))
